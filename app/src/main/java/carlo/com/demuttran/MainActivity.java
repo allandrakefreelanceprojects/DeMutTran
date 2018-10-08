@@ -9,8 +9,6 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
 import java.util.Locale;
 
@@ -25,8 +23,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // Speech to Text
-        editText_speechtotext = findViewById(R.id.editText_speechtotext);
+        // Speak to Text
+        editText_speechtotext = findViewById(R.id.editText_speaktotext);
         mSpeakBtn = findViewById(R.id.button_speak);
         mSpeakBtn.setOnClickListener(new View.OnClickListener() {
 

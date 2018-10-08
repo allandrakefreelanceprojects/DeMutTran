@@ -12,7 +12,7 @@
         android:layout_weight="1">
 
         <EditText
-            android:id="@+id/editText_speechtotext"
+            android:id="@+id/editText_speaktotext"
             android:layout_width="match_parent"
             android:layout_height="160dp"
             android:gravity="top"
@@ -23,7 +23,7 @@
             android:id="@+id/button_speak"
             android:layout_width="93dp"
             android:layout_height="80dp"
-            android:layout_below="@+id/editText_speechtotext"
+            android:layout_below="@+id/editText_speaktotext"
             android:layout_centerHorizontal="true"
             android:background="@null"
             android:padding="16dp"
