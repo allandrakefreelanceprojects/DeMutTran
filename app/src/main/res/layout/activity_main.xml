@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity"
-    tools:layout_editor_absoluteY="25dp">(
+    tools:layout_editor_absoluteY="25dp">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -14,19 +14,19 @@
         <EditText
             android:id="@+id/editText_speaktotext"
             android:layout_width="match_parent"
-            android:layout_height="160dp"
+            android:layout_height="120dp"
             android:gravity="top"
             android:hint="Enter text"
             android:inputType="text|textMultiLine" />
 
         <ImageButton
             android:id="@+id/button_speak"
-            android:layout_width="93dp"
-            android:layout_height="80dp"
+            android:layout_width="75dp"
+            android:layout_height="59dp"
             android:layout_below="@+id/editText_speaktotext"
             android:layout_centerHorizontal="true"
             android:background="@null"
-            android:padding="16dp"
+            android:padding="8dp"
             android:scaleType="fitCenter"
             android:src="@drawable/ic_microphone" />
 
@@ -35,9 +35,10 @@
             android:layout_width="166dp"
             android:layout_height="wrap_content"
             android:layout_below="@+id/button_speak"
-            android:layout_centerInParent="true"
-            android:layout_marginTop="10dp"
-            android:background="#6bbdc4"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:layout_marginTop="15dp"
+            android:background="#357277"
             android:text="Translate"
             android:textColor="#fff" />
 
