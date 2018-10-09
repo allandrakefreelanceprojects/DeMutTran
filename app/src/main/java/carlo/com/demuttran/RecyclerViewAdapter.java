@@ -23,7 +23,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         mNames = names;
         mImageUrls = imageUrls;
         mContext = context;
-
     }
 
     @Override
