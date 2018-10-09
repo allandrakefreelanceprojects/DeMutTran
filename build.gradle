@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 apply plugin: 'com.android.application'
 
 android {
@@ -31,4 +32,32 @@ dependencies {
     implementation 'com.github.bumptech.glide:glide:4.4.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.4.0'
     implementation 'de.hdodenhof:circleimageview:2.2.0'
+=======
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+
+buildscript {
+    
+    repositories {
+        google()
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:3.2.0'
+        
+
+        // NOTE: Do not place your application dependencies here; they belong
+        // in the individual module build.gradle files
+    }
+}
+
+allprojects {
+    repositories {
+        google()
+        jcenter()
+    }
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+>>>>>>> 046e319f98996fa0dbaea0e3c2c3f69998940b2f
 }
