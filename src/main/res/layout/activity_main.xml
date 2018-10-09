@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity"
+    tools:layout_editor_absoluteY="81dp">
+
+    <RelativeLayout
+        android:id="@+id/relativelayout_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1">
+
+        <EditText
+            android:id="@+id/editText_speaktotext"
+            android:layout_width="match_parent"
+            android:layout_height="167dp"
+            android:gravity="top"
+            android:hint="Enter text"
+            android:inputType="text|textMultiLine" />
+
+        <ImageButton
+            android:id="@+id/button_speak"
+            android:layout_width="75dp"
+            android:layout_height="59dp"
+            android:layout_below="@+id/editText_speaktotext"
+            android:layout_centerHorizontal="true"
+            android:background="@null"
+            android:padding="8dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_microphone" />
+
+        <Button
+            android:id="@+id/button_translate"
+            android:layout_width="166dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/button_speak"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:layout_marginTop="40dp"
+            android:background="#357277"
+            android:text="Translate"
+            android:textColor="#fff" />
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/button_translate"
+            android:layout_marginTop="40dp">
+
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recyclerView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:orientation="horizontal" />
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+
+</android.support.constraint.ConstraintLayout>
