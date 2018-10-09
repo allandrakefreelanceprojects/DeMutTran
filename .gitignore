@@ -1,3 +1,6 @@
+<<<<<<< HEAD
+/build
+=======
 *.iml
 .gradle
 /local.properties
@@ -9,3 +12,4 @@
 /build
 /captures
 .externalNativeBuild
+>>>>>>> 046e319f98996fa0dbaea0e3c2c3f69998940b2f
