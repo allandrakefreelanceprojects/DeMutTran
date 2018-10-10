@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -26,7 +27,8 @@ import java.util.Locale;
 public class MainActivity extends AppCompatActivity {
 
     private static final int REQ_CODE_SPEECH_INPUT = 100;
-    private TextView editText_speaktotext;
+    private EditText editText_speaktotext;
+    private TextView textView_hi, textView_hello, textView_goodmorning, textView_goodafternoon, textView_goodevening, textView_goodnight;
     private ImageButton button_speak;
     private Button button_translate;
     private RecyclerView recyclerView;
@@ -41,9 +43,63 @@ public class MainActivity extends AppCompatActivity {
 
         recyclerView = findViewById(R.id.recyclerView);
         editText_speaktotext = findViewById(R.id.editText_speaktotext);
+        textView_hi = findViewById(R.id.textView_hi);
+        textView_hello = findViewById(R.id.textView_hello);
+        textView_goodmorning = findViewById(R.id.textView_goodmorning);
+        textView_goodafternoon = findViewById(R.id.textView_goodafternoon);
+        textView_goodevening = findViewById(R.id.textView_goodevening);
+        textView_goodnight = findViewById(R.id.textView_goodnight);
         button_speak = findViewById(R.id.button_speak);
         button_translate = findViewById(R.id.button_translate);
         dialog_loader = new ProgressDialog(MainActivity.this);
+
+        textView_hi.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                editText_speaktotext.setText(textView_hi.getText().toString());
+                editText_speaktotext.setSelection(editText_speaktotext.getText().length());
+            }
+        });
+
+        textView_hello.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                editText_speaktotext.setText(textView_hello.getText().toString());
+                editText_speaktotext.setSelection(editText_speaktotext.getText().length());
+            }
+        });
+
+        textView_goodmorning.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                editText_speaktotext.setText(textView_goodmorning.getText().toString());
+                editText_speaktotext.setSelection(editText_speaktotext.getText().length());
+            }
+        });
+
+        textView_goodafternoon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                editText_speaktotext.setText(textView_goodafternoon.getText().toString());
+                editText_speaktotext.setSelection(editText_speaktotext.getText().length());
+            }
+        });
+
+        textView_goodevening.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                editText_speaktotext.setText(textView_goodevening.getText().toString());
+                editText_speaktotext.setSelection(editText_speaktotext.getText().length());
+            }
+        });
+
+        textView_goodnight.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                editText_speaktotext.setText(textView_goodnight.getText().toString());
+                editText_speaktotext.setSelection(editText_speaktotext.getText().length());
+            }
+        });
 
         button_speak.setOnClickListener(new View.OnClickListener() {
             @Override
