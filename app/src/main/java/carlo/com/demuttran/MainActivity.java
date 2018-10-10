@@ -111,7 +111,8 @@ public class MainActivity extends AppCompatActivity {
         button_translate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!editText_speaktotext.getText().toString().matches("")) {
+                String editText_speaktotext_trim = editText_speaktotext.getText().toString().trim();
+                if(!editText_speaktotext_trim.matches("")) {
                     try {
                         InputMethodManager imm = (InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);
                         imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
@@ -161,6 +162,7 @@ public class MainActivity extends AppCompatActivity {
                     myHandler.postDelayed(run, 2000);
                 } else {
                     Toast.makeText(getApplicationContext(), "Please enter text.", Toast.LENGTH_SHORT).show();
+                    editText_speaktotext.setText("");
                 }
             }
         });
