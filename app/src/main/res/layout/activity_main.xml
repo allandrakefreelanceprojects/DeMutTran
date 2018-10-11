@@ -42,7 +42,7 @@
                     android:paddingRight="10dp"
                     android:layout_marginLeft="5dp"
                     android:layout_marginRight="5dp"
-                    android:layout_marginBottom="5dp"
+                    android:layout_marginBottom="10dp"
                     android:text="Hi"
                     android:textColor="#fff" />
 
@@ -55,7 +55,7 @@
                     android:paddingRight="10dp"
                     android:layout_marginLeft="5dp"
                     android:layout_marginRight="5dp"
-                    android:layout_marginBottom="5dp"
+                    android:layout_marginBottom="8dp"
                     android:text="Hello"
                     android:textColor="#fff" />
 
@@ -68,7 +68,7 @@
                     android:paddingRight="10dp"
                     android:layout_marginLeft="5dp"
                     android:layout_marginRight="5dp"
-                    android:layout_marginBottom="5dp"
+                    android:layout_marginBottom="10dp"
                     android:text="Good morning"
                     android:textColor="#fff" />
 
@@ -81,7 +81,7 @@
                     android:paddingRight="10dp"
                     android:layout_marginLeft="5dp"
                     android:layout_marginRight="5dp"
-                    android:layout_marginBottom="5dp"
+                    android:layout_marginBottom="10dp"
                     android:text="Good afternoon"
                     android:textColor="#fff" />
 
@@ -94,7 +94,7 @@
                     android:paddingRight="10dp"
                     android:layout_marginLeft="5dp"
                     android:layout_marginRight="5dp"
-                    android:layout_marginBottom="5dp"
+                    android:layout_marginBottom="10dp"
                     android:text="Good evening"
                     android:textColor="#fff" />
 
@@ -107,28 +107,13 @@
                     android:paddingRight="10dp"
                     android:layout_marginLeft="5dp"
                     android:layout_marginRight="5dp"
-                    android:layout_marginBottom="5dp"
+                    android:layout_marginBottom="10dp"
                     android:text="Good night"
                     android:textColor="#fff" />
 
             </LinearLayout>
 
         </HorizontalScrollView>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
         <ImageButton
             android:id="@+id/button_speak"
@@ -149,7 +134,7 @@
             android:layout_below="@+id/button_speak"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="30dp"
             android:background="#357277"
             android:text="Translate"
             android:textColor="#fff" />
@@ -158,7 +143,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/button_translate"
-            android:layout_marginTop="40dp">
+            android:layout_marginTop="30dp">
 
 
             <android.support.v7.widget.RecyclerView
