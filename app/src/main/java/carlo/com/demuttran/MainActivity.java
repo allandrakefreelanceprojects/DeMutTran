@@ -2,18 +2,16 @@ package carlo.com.demuttran;
 
 import android.app.ProgressDialog;
 import android.content.ActivityNotFoundException;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
 import android.os.Looper;
 import android.speech.RecognizerIntent;
+import android.speech.tts.TextToSpeech;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
-import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
@@ -24,17 +22,19 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.Locale;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements
+        TextToSpeech.OnInitListener {
 
     private static final int REQ_CODE_SPEECH_INPUT = 100;
     private EditText editText_speaktotext;
     private TextView textView_hi, textView_hello, textView_goodmorning, textView_goodafternoon, textView_goodevening, textView_goodnight;
-    private ImageButton button_speak;
     private Button button_translate;
+    private ImageButton button_microphone, button_speak;
     private RecyclerView recyclerView;
     private ArrayList<String> mNames = new ArrayList<>();
     private ArrayList<Integer> mImageUrls = new ArrayList<>();
     ProgressDialog dialog_loader;
+    TextToSpeech textToSpeech;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,9 +49,11 @@ public class MainActivity extends AppCompatActivity {
         textView_goodafternoon = findViewById(R.id.textView_goodafternoon);
         textView_goodevening = findViewById(R.id.textView_goodevening);
         textView_goodnight = findViewById(R.id.textView_goodnight);
+        button_microphone = findViewById(R.id.button_microphone);
         button_speak = findViewById(R.id.button_speak);
         button_translate = findViewById(R.id.button_translate);
         dialog_loader = new ProgressDialog(MainActivity.this);
+        textToSpeech = new TextToSpeech(this, this);
 
         textView_hi.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -101,10 +103,23 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        button_speak.setOnClickListener(new View.OnClickListener() {
+        button_microphone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startVoiceInput();
+            }
+        });
+
+        button_speak.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String editText_speaktotext_trim = editText_speaktotext.getText().toString().trim();
+                if(!editText_speaktotext_trim.matches("")) {
+                    speakOut();
+                } else {
+                    Toast.makeText(getApplicationContext(), "Please enter text.", Toast.LENGTH_SHORT).show();
+                    editText_speaktotext.setText("");
+                }
             }
         });
 
@@ -179,6 +194,33 @@ public class MainActivity extends AppCompatActivity {
         } catch (ActivityNotFoundException a) {
             // Leave blank
         }
+    }
+
+    @Override
+    public void onDestroy() {
+        if (textToSpeech != null) {
+            textToSpeech.stop();
+            textToSpeech.shutdown();
+        }
+        super.onDestroy();
+    }
+
+    public void onInit(int status) {
+        if (status == TextToSpeech.SUCCESS) {
+            int result = textToSpeech.setLanguage(Locale.US);
+            if (result == TextToSpeech.LANG_MISSING_DATA
+                    || result == TextToSpeech.LANG_NOT_SUPPORTED) {
+                Toast.makeText(getApplicationContext(), "Language is not supported on this device.", Toast.LENGTH_SHORT).show();
+            } else {
+                speakOut();
+            }
+        } else {
+            Toast.makeText(getApplicationContext(), "Language is not supported on this device.", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void speakOut() {
+        textToSpeech.speak(editText_speaktotext.getText().toString(), TextToSpeech.QUEUE_FLUSH, null);
     }
 
     @Override
