@@ -62,6 +62,7 @@
             android:layout_marginTop="5dp" >
 
             <LinearLayout
+                android:id="@+id/linearLayout_quickaccessword"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal" >
@@ -142,6 +143,19 @@
                     android:layout_marginRight="5dp"
                     android:layout_marginBottom="10dp"
                     android:text="Good night"
+                    android:textColor="#fff" />
+
+                <TextView
+                    android:id="@+id/textView_add"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/activity_rounded"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginBottom="10dp"
+                    android:text="ADD"
                     android:textColor="#fff" />
 
             </LinearLayout>
