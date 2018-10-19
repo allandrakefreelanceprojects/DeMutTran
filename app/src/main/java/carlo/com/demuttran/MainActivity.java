@@ -2,6 +2,8 @@ package carlo.com.demuttran;
 
 import android.app.ProgressDialog;
 import android.content.ActivityNotFoundException;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Color;
@@ -13,10 +15,12 @@ import android.speech.RecognizerIntent;
 import android.speech.tts.TextToSpeech;
 import android.support.annotation.RequiresApi;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.InputType;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
@@ -37,7 +41,7 @@ public class MainActivity extends AppCompatActivity implements
 
     private static final int REQ_CODE_SPEECH_INPUT = 100;
     private EditText editText_speaktotext;
-    private TextView textView_hi, textView_hello, textView_goodmorning, textView_goodafternoon, textView_goodevening, textView_goodnight, textView_add;
+    private TextView textView_add;
     private Button button_translate;
     private ImageButton button_microphone, button_speak;
     private RecyclerView recyclerView;
@@ -47,6 +51,7 @@ public class MainActivity extends AppCompatActivity implements
     ProgressDialog dialog_loader;
     TextToSpeech textToSpeech;
     DBAdapter helper;
+    final Context context = this;
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     @Override
@@ -56,12 +61,6 @@ public class MainActivity extends AppCompatActivity implements
 
         recyclerView = findViewById(R.id.recyclerView);
         editText_speaktotext = findViewById(R.id.editText_speaktotext);
-        textView_hi = findViewById(R.id.textView_hi);
-        textView_hello = findViewById(R.id.textView_hello);
-        textView_goodmorning = findViewById(R.id.textView_goodmorning);
-        textView_goodafternoon = findViewById(R.id.textView_goodafternoon);
-        textView_goodevening = findViewById(R.id.textView_goodevening);
-        textView_goodnight = findViewById(R.id.textView_goodnight);
         textView_add = findViewById(R.id.textView_add);
         button_microphone = findViewById(R.id.button_microphone);
         button_speak = findViewById(R.id.button_speak);
@@ -69,54 +68,6 @@ public class MainActivity extends AppCompatActivity implements
         dialog_loader = new ProgressDialog(MainActivity.this);
         textToSpeech = new TextToSpeech(this, this);
         linearLayout_quickaccessword = findViewById(R.id.linearLayout_quickaccessword);
-
-        textView_hi.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                editText_speaktotext.setText(textView_hi.getText().toString());
-                editText_speaktotext.setSelection(editText_speaktotext.getText().length());
-            }
-        });
-
-        textView_hello.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                editText_speaktotext.setText(textView_hello.getText().toString());
-                editText_speaktotext.setSelection(editText_speaktotext.getText().length());
-            }
-        });
-
-        textView_goodmorning.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                editText_speaktotext.setText(textView_goodmorning.getText().toString());
-                editText_speaktotext.setSelection(editText_speaktotext.getText().length());
-            }
-        });
-
-        textView_goodafternoon.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                editText_speaktotext.setText(textView_goodafternoon.getText().toString());
-                editText_speaktotext.setSelection(editText_speaktotext.getText().length());
-            }
-        });
-
-        textView_goodevening.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                editText_speaktotext.setText(textView_goodevening.getText().toString());
-                editText_speaktotext.setSelection(editText_speaktotext.getText().length());
-            }
-        });
-
-        textView_goodnight.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                editText_speaktotext.setText(textView_goodnight.getText().toString());
-                editText_speaktotext.setSelection(editText_speaktotext.getText().length());
-            }
-        });
 
         button_microphone.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -197,7 +148,6 @@ public class MainActivity extends AppCompatActivity implements
             }
         });
 
-
         helper = new DBAdapter(getApplicationContext());
         AddData();
         RetreiveData();
@@ -205,22 +155,66 @@ public class MainActivity extends AppCompatActivity implements
 
     public void AddData() {
         textView_add.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        boolean isInserted = helper.insertData("test");
-                        if(isInserted == true)
-                            Toast.makeText(getApplicationContext(),"Word inserted.", Toast.LENGTH_SHORT).show();
-                        else
-                            Toast.makeText(getApplicationContext(),"Word not inserted.", Toast.LENGTH_SHORT).show();
-                    }
+            new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                    builder.setTitle("Add Quick Access Word.");
+
+                    final EditText input = new EditText(context);
+                    input.setInputType(InputType.TYPE_CLASS_TEXT);
+                    builder.setView(input);
+
+                    builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            boolean isInserted = helper.insertData(input.getText().toString());
+                            if(isInserted == true) {
+
+                                LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                                TextView textView = new TextView(getApplicationContext());
+                                layoutParams.setMargins(15,0,15,10);
+                                textView.setLayoutParams(layoutParams);
+                                final int sdk = android.os.Build.VERSION.SDK_INT;
+                                if(sdk < android.os.Build.VERSION_CODES.JELLY_BEAN) {
+                                    textView.setBackgroundDrawable(getResources().getDrawable(R.drawable.activity_rounded));
+                                } else {
+                                    textView.setBackground(getResources().getDrawable(R.drawable.activity_rounded));
+                                }
+                                textView.setText(input.getText().toString());
+                                final String get_name = input.getText().toString();
+                                textView.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.white));
+                                textView.setPadding(30, 2, 30, 2);
+                                textView.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        editText_speaktotext.setText(get_name);
+                                        editText_speaktotext.setSelection(editText_speaktotext.getText().length());
+                                    }
+                                });
+                                linearLayout_quickaccessword.addView(textView);
+                            } else {
+                                Toast.makeText(getApplicationContext(),"Word not inserted.", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
+
+                    builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.cancel();
+                        }
+                    });
+
+                    builder.show();
                 }
+            }
         );
     }
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     public void RetreiveData() {
-        Cursor res = helper.getAllData();
+        final Cursor res = helper.getAllData();
         if(res.getCount() == 0) {
             helper.insertData("Hi");
             helper.insertData("Hello");
@@ -228,104 +222,33 @@ public class MainActivity extends AppCompatActivity implements
             helper.insertData("Good afternoon");
             helper.insertData("Good evening");
             helper.insertData("Good night");
+
+            RetreiveData();
         } else {
-
-            StringBuffer buffer = new StringBuffer();
             while (res.moveToNext()) {
-                buffer.append("ID:"+ res.getString(0)+"\n");
-                buffer.append("Name:"+ res.getString(1)+"\n");
-
-//                LinearLayout childLayout = new LinearLayout(MainActivity.this);
-//                LinearLayout.LayoutParams linearParams = new LinearLayout.LayoutParams(
-//                        LinearLayout.LayoutParams.WRAP_CONTENT,
-//                        LinearLayout.LayoutParams.WRAP_CONTENT);
-//                childLayout.setLayoutParams(linearParams);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                LinearLayout.LayoutParams lparams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
                 TextView textView = new TextView(getApplicationContext());
-                lparams.setMargins(15,0,15,10);
-                textView.setLayoutParams(lparams);
-
+                layoutParams.setMargins(15,0,15,10);
+                textView.setLayoutParams(layoutParams);
                 final int sdk = android.os.Build.VERSION.SDK_INT;
                 if(sdk < android.os.Build.VERSION_CODES.JELLY_BEAN) {
                     textView.setBackgroundDrawable(getResources().getDrawable(R.drawable.activity_rounded));
                 } else {
                     textView.setBackground(getResources().getDrawable(R.drawable.activity_rounded));
                 }
-
                 textView.setText(res.getString(1));
+                final String get_name = res.getString(1);
                 textView.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.white));
                 textView.setPadding(30, 2, 30, 2);
+                textView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        editText_speaktotext.setText(get_name);
+                        editText_speaktotext.setSelection(editText_speaktotext.getText().length());
+                    }
+                });
                 linearLayout_quickaccessword.addView(textView);
-//                TextView textView = new TextView(MainActivity.this);
-////                TextView mValue = new TextView(MainActivity.this);
-//
-//
-////                <TextView
-////                android:id="@+id/textView_hi"
-////                android:layout_width="wrap_content"
-////                android:layout_height="wrap_content"
-////                android:background="@drawable/activity_rounded"
-////                android:paddingLeft="10dp"
-////                android:paddingRight="10dp"
-////                android:layout_marginLeft="5dp"
-////                android:layout_marginRight="5dp"
-////                android:layout_marginBottom="10dp"
-////                android:text="Hi"
-////                android:textColor="#fff" />
-////
-//                textView.setLayoutParams(new TableLayout.LayoutParams(
-//                        LinearLayout.LayoutParams.WRAP_CONTENT,
-//                        LinearLayout.LayoutParams.WRAP_CONTENT, 1f));
-////                mValue.setLayoutParams(new TableLayout.LayoutParams(
-////                        LinearLayout.LayoutParams.WRAP_CONTENT,
-////                        LinearLayout.LayoutParams.WRAP_CONTENT, 1f));
-//
-////                final int sdk = android.os.Build.VERSION.SDK_INT;
-////                if(sdk < android.os.Build.VERSION_CODES.JELLY_BEAN) {
-////                    textView.setBackgroundDrawable(getResources().getDrawable(R.drawable.activity_rounded));
-////                } else {
-////                    textView.setBackground(getResources().getDrawable(R.drawable.activity_rounded));
-////                }
-//
-////                mType.setTextColor(Color.parseColor("#fff"));
-//                textView.setText(res.getString(1));
-//                textView.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.white));
-//
-//                textView.setPadding(10, 2, 10, 2);
-////                mType.layout(5,0,5,10);
-////                mType.setTypeface(Typeface.DEFAULT_BOLD);
-////                mType.setGravity(Gravity.LEFT | Gravity.CENTER);
-//
-////                mValue.setTextSize(16);
-////                mValue.setPadding(5, 3, 0, 3);
-////                mValue.setTypeface(null, Typeface.ITALIC);
-////                mValue.setGravity(Gravity.LEFT | Gravity.CENTER);
-//
-////                mValue.setText("111");
-//
-////                childLayout.addView(mValue, 0);
-//                childLayout.addView(textView, 0);
-//
-////                linearLayout_quickaccessword.addView(textView);
             }
-
-            Log.d("test", buffer.toString());
         }
     }
 
